@@ -107,3 +107,37 @@ class Audio(MediaObject):
     def get_info(self):
         info = super().get_info()
         return f"{info}, {self.sample_rate} Гц, {self.bitrate} кбит/с"
+
+
+
+
+
+class MediaLibrary:
+    """Класс для управления коллекцией медиафайлов."""
+
+    def __init__(self):
+        """Создаёт пустую коллекцию."""
+        self.media_objects = []
+
+    def add(self, media_obj):
+        """Добавляет объект в коллекцию."""
+        if not isinstance(media_obj, MediaObject):
+            raise TypeError("Можно добавлять только объекты MediaObject и его наследников")
+        self.media_objects.append(media_obj)
+
+    def get_total_duration(self):
+        """Возвращает общую длительность всех объектов (в секундах)."""
+        return sum(obj.duration for obj in self.media_objects)
+
+    def filter_by_type(self, media_type):
+        """Возвращает список объектов заданного типа."""
+        return [obj for obj in self.media_objects if isinstance(obj, media_type)]
+
+    def __len__(self):
+        """Позволяет использовать len(library)."""
+        return len(self.media_objects)
+
+    def __str__(self):
+        return f"<MediaLibrary: {len(self.media_objects)} объектов>"
+
+
